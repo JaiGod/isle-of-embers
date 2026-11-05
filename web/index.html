@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isle of Embers</title>
+<meta name="description" content="Isle of Embers: a top-down survival crafting game made in Godot 4. Gather, craft, build, survive night raids, beat two bosses and light the signal beacon.">
+<link rel="icon" href="play/index.icon.png">
+<style>
+:root{--bg:#0d111c;--card:#161c2c;--ink:#f2e8d8;--dim:#aab3c8;--ember:#ff8a3d;--gold:#ffd27a;--sea:#2f86b8;--leaf:#5fa545}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
+a{color:var(--gold)}
+header{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#hero{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-in{position:relative;padding:24px 16px;max-width:760px}
+h1{font-size:clamp(40px,9vw,88px);line-height:1;margin:0 0 12px;color:var(--ember);letter-spacing:2px;text-shadow:0 4px 0 #3a1206,0 0 40px rgba(255,120,40,.45)}
+.tag{font-size:clamp(17px,2.6vw,22px);color:#e6ecf8;margin:0 0 26px;text-shadow:0 2px 6px #000}
+.play{display:inline-block;background:linear-gradient(180deg,#ffa456,#ff6a2a);color:#1b0b03;font-weight:800;font-size:22px;padding:16px 34px;border-radius:14px;text-decoration:none;box-shadow:0 8px 0 #9a3a10,0 12px 30px rgba(255,110,40,.5);transition:transform .12s}
+.play:hover{transform:translateY(-2px)}
+.play:active{transform:translateY(4px);box-shadow:0 3px 0 #9a3a10}
+.sub{margin-top:18px;font-size:14px;color:var(--dim);text-shadow:0 2px 4px #000}
+main{max-width:1060px;margin:0 auto;padding:0 16px 60px}
+h2{color:var(--gold);font-size:28px;margin:54px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:18px;color:#ffe9b8}
+.card p{margin:0;color:var(--dim);font-size:15px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.shots img{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.1);display:block}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.steps li{background:var(--card);border-radius:12px;padding:12px 14px 12px 52px;position:relative;color:#dfe6f4}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:11px;width:26px;height:26px;border-radius:50%;background:var(--ember);color:#1b0b03;font-weight:800;text-align:center;line-height:26px}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top}
+td:first-child{color:var(--gold);white-space:nowrap;width:38%}
+kbd{background:#2a2f45;border-radius:5px;padding:1px 7px;font-size:13px;border:1px solid #3b4262}
+footer{text-align:center;color:var(--dim);padding:30px 16px 50px;font-size:14px}
+@media (max-width:560px){td:first-child{white-space:normal}}
+</style>
+</head>
+<body>
+<header>
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <h1>ISLE OF EMBERS</h1>
+    <p class="tag">Stranded on a volcanic island. Gather, craft and build by day. Survive the raids by night. Light the signal beacon and escape.</p>
+    <a class="play" href="play/">&#9654; Play in browser</a>
+    <p class="sub">Free · Desktop (keyboard + mouse) &amp; phone (touch) · Saves automatically · Made with Godot 4</p>
+  </div>
+</header>
+<main>
+  <h2>What you'll do</h2>
+  <div class="grid">
+    <div class="card"><h3>&#127965; Survive</h3><p>Every island is procedurally generated. Keep Health, Hunger, Thirst and Warmth up through a full day / night cycle.</p></div>
+    <div class="card"><h3>&#129683; Gather &amp; craft</h3><p>Wood, stone, fiber and iron ore. 19 recipes across Hands, Workbench, Furnace and Campfire tiers: axe, pickaxe, spear, bow, iron sword, fire staff, armor.</p></div>
+    <div class="card"><h3>&#129521; Build a base</h3><p>Campfires light and warm the night, walls stop raiders, chests store loot, farm plots grow berries, the furnace smelts iron.</p></div>
+    <div class="card"><h3>&#128293; Two bosses</h3><p>The Thornback charges in on night 3. The Cinder Wyrm sleeps in the volcano crater, and its Ember Heart lights your way home.</p></div>
+  </div>
+
+  <h2>Screenshots</h2>
+  <div class="shots">
+    <img src="docs/screenshots/title.jpg" alt="Title screen over the live island" loading="lazy">
+    <img src="docs/screenshots/night-base.jpg" alt="A walled base defended at night by campfire light" loading="lazy">
+    <img src="docs/screenshots/thornback.jpg" alt="Fighting the Thornback boss" loading="lazy">
+    <img src="docs/screenshots/crafting.jpg" alt="The crafting menu" loading="lazy">
+  </div>
+
+  <h2>Path to rescue</h2>
+  <ol class="steps">
+    <li>Punch trees and boulders, then craft a <b>Stone Axe</b> and <b>Pickaxe</b>.</li>
+    <li>Place a <b>Workbench</b> and a <b>Campfire</b> before the first night.</li>
+    <li>Wall in your camp. Mine iron and smelt it at a <b>Furnace</b>.</li>
+    <li>Beat the <b>Thornback</b> (night 3) and forge a <b>Fire Staff</b> from its shard.</li>
+    <li>Wake the <b>Cinder Wyrm</b> in the crater and take its <b>Ember Heart</b>.</li>
+    <li>Build the <b>Signal Beacon</b>, light it, and survive 60 seconds until the ship arrives.</li>
+  </ol>
+
+  <h2>Controls</h2>
+  <table>
+    <tr><td>Move</td><td><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows · touch: left stick</td></tr>
+    <tr><td>Use tool / attack / place</td><td>Left click (aim with mouse) · touch: USE</td></tr>
+    <tr><td>Interact (drink, chest, farm, cook, beacon)</td><td><kbd>E</kbd> or right click · touch: ACT</td></tr>
+    <tr><td>Eat</td><td><kbd>F</kbd> · touch: EAT</td></tr>
+    <tr><td>Craft</td><td><kbd>C</kbd> / <kbd>Tab</kbd> · touch: CRAFT</td></tr>
+    <tr><td>Hotbar</td><td><kbd>1</kbd>–<kbd>9</kbd>, mouse wheel · touch: tap a slot</td></tr>
+    <tr><td>Pause / sound</td><td><kbd>Esc</kbd> / <kbd>M</kbd></td></tr>
+  </table>
+
+  <h2>Links</h2>
+  <div class="grid">
+    <div class="card"><h3><a href="play/">&#9654; Play now</a></h3><p>Runs in any modern browser, no install.</p></div>
+    <div class="card"><h3><a href="https://github.com/JaiGod/isle-of-embers">Source code</a></h3><p>Godot 4.3 project, MIT licensed, with a headless smoke test.</p></div>
+    <div class="card"><h3><a href="https://github.com/JaiGod">More JaiGod games</a></h3><p>Browse the rest of the studio's projects.</p></div>
+  </div>
+</main>
+<footer>Made by Jaineil Rana (JaKing) · part of <a href="https://github.com/JaiGod">JaiGod</a> · MIT License</footer>
+<script>
+(function(){
+  var c=document.getElementById('hero'),x=c.getContext('2d'),W,H,t=0,em=[];
+  function rs(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+  addEventListener('resize',rs);rs();
+  for(var i=0;i<70;i++)em.push({x:Math.random(),y:Math.random(),s:1+Math.random()*2.5,v:.02+Math.random()*.05,p:Math.random()*6});
+  function blob(cx,cy,r,col,n,a){x.fillStyle=col;x.beginPath();for(var i=0;i<=48;i++){var g=i/48*Math.PI*2,k=r*(1+.08*Math.sin(g*5+n)+.05*Math.sin(g*9+n*2+a));x.lineTo(cx+Math.cos(g)*k,cy+Math.sin(g)*k*.55)}x.fill()}
+  function f(){t+=.016;var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b1430');g.addColorStop(.55,'#123a63');g.addColorStop(1,'#1b5f8f');x.fillStyle=g;x.fillRect(0,0,W,H);
+    var cx=W/2,cy=H*.72,r=Math.min(W*.42,520);
+    x.fillStyle='rgba(255,255,255,.08)';for(var i=0;i<14;i++){var yy=H*.5+i*22+Math.sin(t+i)*3;x.fillRect((i*137+t*20)%W,yy,40,2)}
+    blob(cx,cy,r*1.08,'#e6cf8f',1,t*.2);blob(cx,cy-6,r*.94,'#5fa545',2,t*.15);blob(cx,cy-10,r*.6,'#3f7f3a',3,0);
+    x.fillStyle='#5b5560';x.beginPath();x.moveTo(cx-r*.38,cy-10);x.lineTo(cx-r*.08,cy-r*.62);x.lineTo(cx+r*.08,cy-r*.62);x.lineTo(cx+r*.38,cy-10);x.fill();
+    x.fillStyle='#ff6a2a';x.beginPath();x.ellipse(cx,cy-r*.62,r*.09,r*.025,0,0,7);x.fill();
+    var gl=x.createRadialGradient(cx,cy-r*.62,0,cx,cy-r*.62,r*.5);gl.addColorStop(0,'rgba(255,140,50,.45)');gl.addColorStop(1,'rgba(255,140,50,0)');x.fillStyle=gl;x.fillRect(0,0,W,H);
+    for(var j=0;j<em.length;j++){var e=em[j];e.y-=e.v*.016*3;if(e.y<0){e.y=1;e.x=Math.random()}var ex=cx+(e.x-.5)*r*.9+Math.sin(t+e.p)*20,ey=cy-r*.62-(1-e.y)*H*.7;
+      x.fillStyle='rgba(255,'+(140+(j%5)*20)+',60,'+(e.y*.9)+')';x.beginPath();x.arc(ex,ey,e.s,0,7);x.fill()}
+    x.fillStyle='rgba(13,17,28,.35)';x.fillRect(0,0,W,H);
+    requestAnimationFrame(f)}
+  f();
+})();
+</script>
+</body>
+</html>
