@@ -1,0 +1,64 @@
+name: Test, export & deploy to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: 4.3
+
+jobs:
+  build:
+    name: Smoke test + Web export
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Link export templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          if [ ! -d ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable ]; then
+            ln -s /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          fi
+      - name: Import project
+        run: godot --headless --path . --import || true
+      - name: Smoke test (gather, craft, build, bosses, save/load, win, death)
+        run: |
+          godot --headless --path . --script tests/smoke.gd 2>&1 | tee smoke.log
+          grep -q "SMOKE OK" smoke.log
+          ! grep -q "SCRIPT ERROR" smoke.log
+      - name: Export Web (Compatibility renderer, threads off)
+        run: |
+          mkdir -p site/play
+          godot --headless --path . --export-release "Web" site/play/index.html
+          test -f site/play/index.pck
+      - name: Assemble site (landing page + game at /play/)
+        run: |
+          cp web/index.html site/index.html
+          mkdir -p site/docs && cp -r docs/screenshots site/docs/ || true
+          touch site/.nojekyll
+          ls -la site site/play
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
